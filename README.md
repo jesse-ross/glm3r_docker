@@ -3,6 +3,7 @@
 Testing GLM3R in a Docker/Singularity container
 
 ## To execute an R script in the container on Yeti
+This pattern can be used inside a SLURM batch script:
 ```
 #from inside this repo, with the .sif file at the top level directory
 module load singularity/3.4.1
