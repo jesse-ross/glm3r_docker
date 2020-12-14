@@ -1,7 +1,7 @@
 version: "3.1" 
 services:
   glm_test:
-    image: wdwatkins/glm3r:v0.2
+    image: wdwatkins/glm3r:v0.3
     build:
       context: .
     ports:
