@@ -4,6 +4,8 @@ WORKDIR /home/rstudio/
 RUN apt-get update && apt-get install --assume-yes apt-utils
 RUN apt-get --assume-yes install libgd-dev m4 libnetcdf-dev 
 
+#build GLM executable from source, based on jread's build script
+#libaed, libutil, and libaid-water could be built from a fixed commit like libplot is
 RUN mkdir AquaticEcoDynamics && \
   cd AquaticEcoDynamics && \
   git clone https://github.com/AquaticEcoDynamics/libplot.git && \
@@ -15,11 +17,17 @@ RUN mkdir AquaticEcoDynamics && \
   cd GLM && ./build_glm.sh
 
 #this fork has fix for GLM_PATH variable when using
-#a different binary than included with the package
-RUN Rscript -e 'devtools::install_github("jsta/GLM3r")'
+#a different binary than included with the package; restore to 
+#GLEON repo when https://github.com/GLEON/GLM3r/pull/20 is merged
+RUN Rscript -e 'remotes::install_github("jsta/GLM3r")'
 
-RUN echo 'Sys.setenv(LD_LIBRARY_PATH = paste("/usr/local/lib64", Sys.getenv("LD_LIBRARY_PATH"), sep=":"), \
-                     GLM_PATH = "/home/rstudio/AquaticEcoDynamics/GLM/glm")' >> /usr/local/lib/R/etc/Rprofile.site
+#set GLM_PATH variable so GLM3r uses the executable built here instead of the one included with the pacakage
+RUN echo 'Sys.setenv(GLM_PATH = "/home/rstudio/AquaticEcoDynamics/GLM/glm")' >> /usr/local/lib/R/etc/Rprofile.site
+
+#add additional R packages to install here:
+#RUN install2.r --error \
+#  httr \
+#  package... 
 
 RUN mkdir -p glm3_test && \
     chown rstudio glm3_test 
