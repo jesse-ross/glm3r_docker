@@ -26,6 +26,3 @@ RUN echo 'Sys.setenv(GLM_PATH = "/usr/local/bin/GLM/glm")' >> /usr/local/lib/R/e
 #RUN install2.r --error \
 #  httr \
 #  package...
-
-WORKDIR /usr/local/bin
-
