@@ -5,9 +5,9 @@ RUN apt-get --assume-yes install libgd-dev m4 libnetcdf-dev
 
 #build GLM executable from source, based on jread's build script
 #libaed, libutil, and libaid-water could be built from a fixed commit like libplot is
-RUN mkdir /work && \
-  chown rstudio /work && \
-  cd /work && \
+# mkdir /usr/local/bin && \
+#  chown rstudio /usr/local/bin && \
+RUN cd /usr/local/bin && \
   git clone https://github.com/AquaticEcoDynamics/libplot.git && \
   cd libplot && git reset --hard 727ed89ce21d84abadf65e16854e8dd307d0c191 && cd .. && \
   git clone https://github.com/AquaticEcoDynamics/libaed2.git && \
@@ -22,12 +22,12 @@ RUN mkdir /work && \
 RUN Rscript -e 'remotes::install_github("jsta/GLM3r")'
 
 #set GLM_PATH variable so GLM3r uses the executable built here instead of the one included with the pacakage
-RUN echo 'Sys.setenv(GLM_PATH = "/work/GLM/glm")' >> /usr/local/lib/R/etc/Rprofile.site
+RUN echo 'Sys.setenv(GLM_PATH = "/usr/local/bin/GLM/glm")' >> /usr/local/lib/R/etc/Rprofile.site
 
 #add additional R packages to install here:
 #RUN install2.r --error \
 #  httr \
 #  package...
 
-WORKDIR /work
+WORKDIR /usr/local/bin
 
