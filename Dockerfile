@@ -5,8 +5,6 @@ RUN apt-get --assume-yes install libgd-dev m4 libnetcdf-dev
 
 #build GLM executable from source, based on jread's build script
 #libaed, libutil, and libaid-water could be built from a fixed commit like libplot is
-# mkdir /usr/local/bin && \
-#  chown rstudio /usr/local/bin && \
 RUN cd /usr/local/bin && \
   git clone https://github.com/AquaticEcoDynamics/libplot.git && \
   cd libplot && git reset --hard 727ed89ce21d84abadf65e16854e8dd307d0c191 && cd .. && \
