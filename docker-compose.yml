@@ -9,4 +9,6 @@ services:
     environment:
       - ROOT=TRUE
       - PASSWORD=mypass
+    volumes:
+      - "../res-temperature-process-models:/home/rstudio"
 
