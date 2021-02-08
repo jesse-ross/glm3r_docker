@@ -17,12 +17,11 @@ RUN cd /usr/local/bin && \
 #this fork has fix for GLM_PATH variable when using
 #a different binary than included with the package; restore to
 #GLEON repo when https://github.com/GLEON/GLM3r/pull/20 is merged
-RUN Rscript -e 'remotes::install_github("jsta/GLM3r")'
+RUN Rscript -e 'library(remotes); install_github("GLEON/GLMr"); install_github("GLEON/glmtools"); install_github("jsta/GLM3r")'
 
 #set GLM_PATH variable so GLM3r uses the executable built here instead of the one included with the pacakage
 RUN echo 'Sys.setenv(GLM_PATH = "/usr/local/bin/GLM/glm")' >> /usr/local/lib/R/etc/Rprofile.site
 
 #add additional R packages to install here:
-#RUN install2.r --error \
-#  httr \
-#  package...
+RUN install2.r --error igraph fst feather
+RUN Rscript -e 'library(remotes); install_github("ropensci/targets"); install_github("ropensci/tarchetypes")'
