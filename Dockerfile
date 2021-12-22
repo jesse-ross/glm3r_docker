@@ -14,14 +14,12 @@ RUN cd /usr/local/bin && \
   git clone https://github.com/AquaticEcoDynamics/libaed-water.git && \
   cd GLM && ./build_glm.sh
 
-#this fork has fix for GLM_PATH variable when using
-#a different binary than included with the package; restore to
-#GLEON repo when https://github.com/GLEON/GLM3r/pull/20 is merged
-RUN Rscript -e 'library(remotes); install_github("GLEON/GLMr"); install_github("GLEON/glmtools"); install_github("jsta/GLM3r")'
+RUN Rscript -e 'library(remotes); install_github("GLEON/GLMr");'
+RUN Rscript -e 'library(remotes); install_github("GLEON/GLM3r");'
+RUN Rscript -e 'library(remotes); install_github("GLEON/glmtools");'
 
 #set GLM_PATH variable so GLM3r uses the executable built here instead of the one included with the pacakage
 RUN echo 'Sys.setenv(GLM_PATH = "/usr/local/bin/GLM/glm")' >> /usr/local/lib/R/etc/Rprofile.site
 
 #add additional R packages to install here:
-RUN install2.r --error igraph fst feather
-RUN Rscript -e 'library(remotes); install_github("ropensci/targets"); install_github("ropensci/tarchetypes")'
+RUN install2.r --error igraph fst feather targets tarchetypes

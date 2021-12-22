@@ -1,7 +1,7 @@
 version: "3.1"
 services:
   glm_test:
-    image: aapplingusgs/glm3r:v0.5
+    image: jrossusgs/glm3r:v0.6a
     build:
       context: .
     ports:
