@@ -22,4 +22,11 @@ RUN Rscript -e 'library(remotes); install_github("GLEON/glmtools");'
 RUN echo 'Sys.setenv(GLM_PATH = "/usr/local/bin/GLM/glm")' >> /usr/local/lib/R/etc/Rprofile.site
 
 #add additional R packages to install here:
-RUN install2.r --error igraph fst feather targets tarchetypes
+RUN install2.r --error arrow \
+                       igraph \
+                       fst \
+                       ncdf4 \
+                       ncdf4.helpers \
+                       retry \
+                       tarchetypes \
+                       targets
