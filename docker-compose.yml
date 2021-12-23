@@ -1,7 +1,7 @@
 version: "3.1"
 services:
   glm_test:
-    image: jrossusgs/glm3r:v0.6a
+    image: jrossusgs/glm3r:v0.6c
     build:
       context: .
     ports:
@@ -11,4 +11,3 @@ services:
       - PASSWORD=mypass
     volumes:
       - "../res-temperature-process-models:/home/rstudio"
-
