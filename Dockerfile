@@ -39,20 +39,25 @@ RUN apt-get update && apt-get install -y \
 # Build GLM executable from source, based on jread's build script.
 # Note that libaed, libutil, and libaid-water could be built from a fixed
 # commit like libplot is.
-# Also, remove these git repos after GLM is built?
-RUN cd /usr/local/bin && \
+RUN cd /tmp && \
   git clone https://github.com/AquaticEcoDynamics/libplot.git && \
   cd libplot && git reset --hard 727ed89ce21d84abadf65e16854e8dd307d0c191 && cd .. && \
   git clone https://github.com/AquaticEcoDynamics/libaed2.git && \
   git clone https://github.com/AquaticEcoDynamics/libutil.git && \
   git clone -b v3.1.0 https://github.com/AquaticEcoDynamics/GLM.git && \
   git clone https://github.com/AquaticEcoDynamics/libaed-water.git && \
-  cd GLM && ./build_glm.sh
+  cd GLM && \
+  ./build_glm.sh && \
+  mkdir /usr/local/bin/GLM && \
+  mv glm /usr/local/bin/GLM && \
+  cd .. && \
+  rm -rf *
 
 RUN Rscript -e 'library(remotes); \
                 install_github("GLEON/GLMr"); \
                 install_github("GLEON/GLM3r"); \
-                install_github("GLEON/glmtools");'
+                install_github("GLEON/glmtools");' \
+  && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 
 # Install the necessary pipeline and parallelization packages for R
 RUN install2.r --error \
