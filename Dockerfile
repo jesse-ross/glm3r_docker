@@ -41,12 +41,18 @@ RUN apt-get update && apt-get install -y \
 # commit like libplot is.
 RUN cd /tmp && \
   git clone https://github.com/AquaticEcoDynamics/libplot.git && \
-  cd libplot && git reset --hard 727ed89ce21d84abadf65e16854e8dd307d0c191 && cd .. && \
+  #cd libplot && git reset --hard 727ed89ce21d84abadf65e16854e8dd307d0c191 && cd .. && \
   git clone https://github.com/AquaticEcoDynamics/libaed2.git && \
   git clone https://github.com/AquaticEcoDynamics/libutil.git && \
-  git clone -b v3.1.0 https://github.com/AquaticEcoDynamics/GLM.git && \
   git clone https://github.com/AquaticEcoDynamics/libaed-water.git && \
+  git clone https://github.com/AquaticEcoDynamics/GLM.git && \
   cd GLM && \
+  # The line below pins GLM at "version" 3.2.0a3. See this history:
+  # https://github.com/AquaticEcoDynamics/GLM/commits/eb6ca67140ea2e39c866e3fd917e674387ef4b95/src/glm.h
+  # The glm.h file there contains a line like 
+  # #define GLM_VERSION "3.2.0a3"
+  # which defines the version.
+  git reset --hard 75b4b4063f74c4034116d0abd21a09d8521f76cf &&\
   ./build_glm.sh && \
   mkdir /usr/local/bin/GLM && \
   mv glm /usr/local/bin/GLM && \
