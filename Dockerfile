@@ -39,8 +39,8 @@ RUN apt-get update && apt-get install -y \
 # Build GLM executable from source, based on jread's build script.
 # Note that libaed, libutil, and libaid-water could be built from a fixed
 # commit like libplot is.
-RUN cd /tmp && \
-  git clone https://github.com/AquaticEcoDynamics/libplot.git && \
+WORKDIR /tmp
+RUN git clone https://github.com/AquaticEcoDynamics/libplot.git && \
   #cd libplot && git reset --hard 727ed89ce21d84abadf65e16854e8dd307d0c191 && cd .. && \
   git clone https://github.com/AquaticEcoDynamics/libaed2.git && \
   git clone https://github.com/AquaticEcoDynamics/libutil.git && \
